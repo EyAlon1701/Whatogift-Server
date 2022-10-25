@@ -1,0 +1,19 @@
+{
+  "name": "whatogift-server",
+  "version": "1.0.0",
+  "description": "What to gift server API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EyAlon1701/Whatogift-Server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EyAlon1701/Whatogift-Server/issues"
+  },
+  "homepage": "https://github.com/EyAlon1701/Whatogift-Server#readme"
+}
