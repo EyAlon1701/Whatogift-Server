@@ -68,13 +68,13 @@ router.post('/verify', async(request, response) => {
             account.isVerified = true;
             account.save()
             .then(account_updated => {
-                return res.status(200).json({
+                return response.status(200).json({
                     status: true,
                     message: account_updated
                 });
             })
             .catch(error => {
-                return res.status(500).json({
+                return response.status(500).json({
                     status: false,
                     message: error.message
                 });
@@ -82,7 +82,7 @@ router.post('/verify', async(request, response) => {
         }
         else 
         {
-            return res.status(200).json({
+            return response.status(200).json({
                 status: false,
                 message: 'Verify code not match'
             });
@@ -98,15 +98,17 @@ router.post('/verify', async(request, response) => {
 
 router.post('/login',async(request, response) => {
     const {email,password} = request.body;
-    Account.findOne({where: {email: email}})
+    Account.findOne({email: email})
     .then(async account => {
         const isMatch = await bcryptjs.compare(password, account.password);
+        console.log("ismatch:" + isMatch);
+        console.log("ver:" + account.isVerified);
         if(isMatch && account.isVerified)
         {
             const data = {account};
-            const token = await jwt.sign(data, 'EyAlon#1701');
+            const token = await jwt.sign(data, 'zt43dFwBWT85abZwIGhNRaUlLs9zsQaH');
 
-            return res.status(200).json({
+            return response.status(200).json({
                 status: true,
                 message: account,
                 token: token
@@ -114,7 +116,7 @@ router.post('/login',async(request, response) => {
         } 
         else 
         {
-            return res.status(200).json({
+            return response.status(200).json({
                 status: false,
                 message: 'Username or password not match or account not verified'
             });
@@ -128,7 +130,7 @@ router.post('/login',async(request, response) => {
     })
 })
 
-router.get('/getOverview', async(req,res) => {
+router.get('/getOverview', async(request,response) => {
 
 })
 
