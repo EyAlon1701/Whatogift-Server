@@ -23,7 +23,7 @@ const port = 3001;
 
 mongoose.connect(mongoUrl)
 .then(results => {
-    console.log(results);
+    //console.log(results);
     app.listen(port, function(){
         console.log(`Server is running via port ${port}`);
     });

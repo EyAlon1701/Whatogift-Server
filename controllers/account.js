@@ -3,6 +3,7 @@ const router = express.Router();
 import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
+import Auth from './auth.js';
 
 //MODELS
 import Account from '../models/account.js';
@@ -101,8 +102,6 @@ router.post('/login',async(request, response) => {
     Account.findOne({email: email})
     .then(async account => {
         const isMatch = await bcryptjs.compare(password, account.password);
-        console.log("ismatch:" + isMatch);
-        console.log("ver:" + account.isVerified);
         if(isMatch && account.isVerified)
         {
             const data = {account};
@@ -130,8 +129,10 @@ router.post('/login',async(request, response) => {
     })
 })
 
-router.get('/getOverview', async(request,response) => {
-
+router.get('/getOverview', Auth, async(request,response) => {
+    return response.status(200).json({
+        message: `Hello ${request.user.firstName} ${request.user.lastName}`
+    })
 })
 
 function generateRandomIntegerInRange(min, max) 
