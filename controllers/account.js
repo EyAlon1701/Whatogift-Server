@@ -7,7 +7,6 @@ import Auth from './auth.js';
 
 //MODELS
 import Account from '../models/account.js';
-import account from "../models/account.js";
 
 router.post('/signup', async(request, response) => {
     const id= mongoose.Types.ObjectId();
@@ -50,6 +49,7 @@ router.post('/signup', async(request, response) => {
             })
         }
     })
+    
     .catch(error =>{
         return response.status(500).json({
             status: false,
