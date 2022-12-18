@@ -8,6 +8,54 @@ import Auth from './auth.js';
 //MODELS
 import Account from '../models/account.js';
 
+/**
+ * @swagger
+ * definitions:
+ *  Signup:
+ *      type: object
+ *      properties:
+ *          email:
+ *              type: string
+ *          password:
+ *              type: string
+ *          firstName:
+ *              type: string   
+ *          lastName:
+ *              type: string
+ *  Verify:
+ *      type: object
+ *      properties:
+ *          email:
+ *              type: string
+ *          code:
+ *              type: integer
+ *  Login:
+ *      type: object
+ *      properties:
+ *          email:
+ *              type: string
+ *          password:
+ *              type: string
+*/
+
+/**
+ * @swagger
+ * /api/account/signup:
+ *  post:
+ *      summary: signup
+ *      description: Use this endpoint to signup
+ *      tags: [Accounts]
+ *      requestBody:
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/definitions/Signup'
+ *      responses:
+ *          200:
+ *              description: signup success
+ *          500:
+ *              description: signup faild
+ */
 router.post('/signup', async(request, response) => {
     const id= mongoose.Types.ObjectId();
     //Get user register data 
@@ -58,6 +106,24 @@ router.post('/signup', async(request, response) => {
     })
 })
 
+/**
+ * @swagger
+ * /api/account/verify:
+ *  post:
+ *      summary: verify
+ *      description: Use this endpoint to verify
+ *      tags: [Accounts]
+ *      requestBody:
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/definitions/Verify'
+ *      responses:
+ *          200:
+ *              description: verify success
+ *          500:
+ *              description: verify faild
+ */
 router.post('/verify', async(request, response) => {
     //Get code + email
     const {email, code} = request.body;
@@ -97,8 +163,28 @@ router.post('/verify', async(request, response) => {
     })
 })
 
+/**
+ * @swagger
+ * /api/account/login:
+ *  post:
+ *      summary: login
+ *      description: Use this endpoint to login
+ *      tags: [Accounts]
+ *      requestBody:
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/definitions/Login'
+ *      responses:
+ *          200:
+ *              description: login success
+ *          500:
+ *              description: login faild
+ */
 router.post('/login',async(request, response) => {
     const {email,password} = request.body;
+    console.log("muzar meod; " + email + password);
+
     Account.findOne({email: email})
     .then(async account => {
         const isMatch = await bcryptjs.compare(password, account.password);
